@@ -1,3 +1,17 @@
+/*
+   CRUD
+
+   C -> Create -> Criar
+   R -> Read -> Ler
+   U -> Update -> Atualizar
+   D -> Delete -> Remove
+*/
+
+const { MongoClient } = require("mongodb");
+
+const urlCon = "mongodb+srv://alunos:alunos123@turma-abril.4kgbwqw.mongodb.net/";
+
+const conexao = new MongoClient(urlCon);
 
 /**
  * Adicionar a tarefa ao BD
@@ -55,29 +69,24 @@ function data(tarefa, data)
 
 /**
  * Lista tarefas cadastradas
+ * @param {boolean} concluido 
  */
-function listar()
+async function listar(concluido)
 {
-    let tarefas = [
-        {
-            concluido: false,
-            titulo: "Fazer dever de casa",
-            data_limite: "2024-04-20",
-            data_criado: "2024-04-18"
-        },
-        {
-            concluido: true,
-            titulo: "Ir no dentista",
-            data_limite: "2024-04-20",
-            data_criado: "2024-04-18"
-        },
-        {
-            concluido: false,
-            titulo: "Lavar roupa",
-            data_limite: "2024-04-20",
-            data_criado: "2024-04-18"
-        }
-    ];
+    let filtro = {};
+
+    if (concluido == "true") {
+        filtro.concluido = true;
+    }
+
+    if (concluido == "false") {
+        filtro.concluido = false;
+    }
+
+    let tarefas = await conexao.db("proj-tarefas")
+                        .collection("tarefas")
+                        .find(filtro)
+                        .toArray();
 
     return tarefas;
 }

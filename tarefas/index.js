@@ -12,9 +12,9 @@ const tarefa = require('./model/tarefa')
 // post -> enviar dados
 
 
-app.get("/listar-tarefas", function(req, res){
+app.get("/listar-tarefas", async function(req, res){
 
-    let tarefas = tarefa.listar();
+    let tarefas = await tarefa.listar(req.query.concluido);
 
     res.json(tarefas);
 });
