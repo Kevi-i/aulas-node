@@ -32,9 +32,14 @@ async function cadastrar(nova)
  */
 async function concluir(tarefa)
 {
+    let atual = await conexao.db("proj-tarefas")
+                        .collection("tarefas")
+                        .findOne({_id: new ObjectId(tarefa)});
+    
+
     let novo = { 
         $set: {
-            concluido: true
+            concluido: !atual.concluido
         }
     };
     let retorno = await conexao.db("proj-tarefas")
