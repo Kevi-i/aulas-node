@@ -42,8 +42,16 @@ app.post("/nova-tarefa", async function(req, res){
     res.send(retorno);
 });
 
-app.post("/alterar-tarefa", function(req, res) {
-    res.send("tarefa alterada")
+app.post("/alterar-tarefa", async function(req, res) {
+    
+    let id = req.body.id;
+    let alterado = req.body.alterado;
+
+    if (alterado.concluido){
+        let retorno = await tarefa.concluir(id);
+        res.send(retorno)
+    }
+
 });
 
 app.post("/deletar-tarefa", async function(req, res){

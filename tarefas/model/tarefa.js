@@ -30,9 +30,17 @@ async function cadastrar(nova)
  * Seta o status da tarefa como concluido
  * @param {*} tarefa Tarefa selecionada 
  */
-function concluir(tarefa)
+async function concluir(tarefa)
 {
-
+    let novo = { 
+        $set: {
+            concluido: true
+        }
+    };
+    let retorno = await conexao.db("proj-tarefas")
+                        .collection("tarefas")
+                        .updateOne({_id: new ObjectId(tarefa)}, novo);
+    return retorno;
 }
 
 /**

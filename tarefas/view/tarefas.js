@@ -1,5 +1,8 @@
 // executa quando a pagina for completamente carregada
 $().ready(function(){
+
+    let SERVIDOR = 'http://localhost:8000';
+    
     
     // lista todos ao iniciar
     carregar();
@@ -14,7 +17,7 @@ $().ready(function(){
 
     function carregar(concluido)
     {
-        $.getJSON('http://localhost:8000/listar-tarefas?concluido='+concluido, function(dados){
+        $.getJSON(SERVIDOR + '/listar-tarefas?concluido='+concluido, function(dados){
 
         // limpa a lista
         $("#lista-tarefas").empty();
@@ -30,7 +33,7 @@ $().ready(function(){
 
                 let item = '<label class="list-group-item d-flex gap-3 d-flex justify-content-between">'
                     +'<span class="pt-1 form-checked-content">'
-                    +'<input class="form-check-input me-2 flex-shrink-0" type="checkbox" value="" '
+                    +'<input codigo="'+ elem._id +'" class="form-check-input check-concluido  me-2 flex-shrink-0" type="checkbox" value="" '
                     + checado
                     +'style="font-size: 1.375em;">'
                     +'<strong>'+ elem.titulo +'</strong>'
@@ -57,7 +60,7 @@ $().ready(function(){
 
         console.log(dados);
 
-        $.post("http://localhost:8000/nova-tarefa", dados, function(retorno){
+        $.post(SERVIDOR + "/nova-tarefa", dados, function(retorno){
             console.log(retorno);
 
             $("#tela-add").modal('hide');
@@ -72,11 +75,25 @@ $().ready(function(){
             id: $(this).attr("codigo") 
         };
         
-        $.post("http://localhost:8000/deletar-tarefa", codigo, function(retorno) {
+        $.post(SERVIDOR + "/deletar-tarefa", codigo, function(retorno) {
             console.log(retorno);
             carregar();
         })
     }); // fim do click bt-del
+
+    $('#lista-tarefas').on("click", ".check-concluido", function(){
+        let codigo = {
+            id: $(this).attr("codigo"),
+            alterado: {
+                concluido: true
+            }
+        };
+
+        $.post(SERVIDOR + "/alterar-tarefa", codigo, function(retorno){
+            console.log(retorno)
+        });
+        
+    }); // fim do check-concluido
 
     
   }); // fim do ready
