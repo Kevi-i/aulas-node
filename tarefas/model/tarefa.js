@@ -7,7 +7,7 @@
    D -> Delete -> Remove
 */
 
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 
 const urlCon = "mongodb+srv://alunos:alunos123@turma-abril.4kgbwqw.mongodb.net/";
 
@@ -17,9 +17,13 @@ const conexao = new MongoClient(urlCon);
  * Adicionar a tarefa ao BD
  * @param {*} nova Dados da nova tarefa 
  */
-function cadastrar(nova)
+async function cadastrar(nova)
 {
+    let retorno = await conexao.db("proj-tarefas")
+                        .collection("tarefas")
+                        .insertOne(nova);
 
+    return retorno;
 }
 
 /**
@@ -44,9 +48,12 @@ function modificar(tarefa, novoDados)
  * Remove a tarefa do BD
  * @param {*} tarefa Tarefa selecionada
  */
-function excluir(tarefa)
+async function excluir(tarefa)
 {
-
+    let retorno = await conexao.db("proj-tarefas")
+                        .collection("tarefas")
+                        .deleteOne({_id: new ObjectId(tarefa)});
+    return retorno;
 }
 
 /**
