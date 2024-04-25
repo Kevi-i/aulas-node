@@ -52,9 +52,17 @@ async function concluir(tarefa)
  * Altera as informações da tarefa
  * @param {*} tarefa Tarefa selecionada
  */
-function modificar(tarefa, novoDados)
+async function modificar(tarefa, novoDados)
 {
+    let novo = {
+        $set: novoDados
+    };
 
+    let retorno = await conexao.db("proj-tarefas")
+                        .collection("tarefas")
+                        .updateOne({_id: new ObjectId(tarefa)}, novo);
+    
+    return retorno;
 }
 
 /**

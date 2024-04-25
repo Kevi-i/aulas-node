@@ -3,6 +3,9 @@ $().ready(function(){
 
     let SERVIDOR = 'http://localhost:8000';
     
+    if (window.location.hostname != ''){
+        SERVIDOR = 'https://tarefas-backend.onrender.com';
+    }
     
     // lista todos ao iniciar
     carregar();
@@ -42,7 +45,10 @@ $().ready(function(){
                     +dia.toLocaleString()
                     +'</small>'
                     +'</span>'
+                    +'<div>'
+                    +'<button class="btn btn-info bt-alterar" dados=\''+ JSON.stringify(elem) +'\' >Alterar</button>'
                     +'<button codigo="'+ elem._id +'" class="btn btn-danger bt-del">Deletar</button>'
+                    +'</div>'
                     +'</label>';
                 
                 $("#lista-tarefas").append(item);
@@ -58,15 +64,26 @@ $().ready(function(){
         dados.titulo = $("#titulo").val();
         dados.data = $("#data-conclusao").val();
 
-        console.log(dados);
+        let id = $("#id-tarefa").val();
 
-        $.post(SERVIDOR + "/nova-tarefa", dados, function(retorno){
-            console.log(retorno);
+        if (id == "")
+        {
+            $.post(SERVIDOR + "/nova-tarefa", dados, function(retorno){
+                console.log(retorno);
 
-            $("#tela-add").modal('hide');
-            carregar();
+                $("#tela-add").modal('hide');
+                carregar();
 
-        });
+            });
+        } else {
+            dados.id = id;
+
+            $.post(SERVIDOR + "/alterar-tarefa", dados, function(retorno){
+                console.log(retorno)
+                $("#tela-add").modal('hide');
+                carregar();
+            });
+        }
 
     }); // fim do bt-salvar
 
@@ -94,6 +111,18 @@ $().ready(function(){
         });
         
     }); // fim do check-concluido
+
+    $("#lista-tarefas").on("click", ".bt-alterar", function(){
+        $("#tela-add").modal('show');
+        
+        let dados = $(this).attr("dados");
+        dados = JSON.parse(dados);
+
+        $("#titulo").val(dados.titulo);
+       $("#data-conclusao").val(dados.data_limite)
+       $("#id-tarefa").val(dados._id);
+
+    }); //fim do bt-alterar
 
     
   }); // fim do ready

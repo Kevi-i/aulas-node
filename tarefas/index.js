@@ -47,10 +47,19 @@ app.post("/alterar-tarefa", async function(req, res) {
     let id = req.body.id;
     let alterado = req.body.alterado;
 
-    if (alterado.concluido){
+    if (alterado && alterado.concluido){
         let retorno = await tarefa.concluir(id);
         res.send(retorno)
     }
+
+    let novos = {
+        titulo: req.body.titulo,
+        data_limite: req.body.data
+    };
+
+    let retorno = await tarefa.modificar(id, novos);
+    res.send(retorno);
+    
 
 });
 
