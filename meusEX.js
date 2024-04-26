@@ -154,8 +154,49 @@ Calcule e mostre o total do seu salário no referido mês, sabendo-se que são d
 = Salário Liquido : R$
 Obs.: Salário Bruto - Descontos = Salário Líquido.*/
 
-let porHora = 5.00;
+/*let porHora = 5.00;
 let hora = 100;
 let salarioBruto = porHora * hora;
 
+// calculo dos descontos
 
+let IR = salarioBruto * 0.11;
+let INSS = salarioBruto * 0.08;
+let sindicato = salarioBruto * 0.05;
+
+
+if (salarioBruto)
+{
+    console.log('R$' + salarioBruto + ' salário bruto');
+}
+
+if (salarioBruto)
+{
+    console.log('R$' + IR + ' desconto do IR');
+}
+
+if (salarioBruto)
+{
+    console.log('R$' + INSS + ' desconto do INSS');
+}
+
+if (salarioBruto)
+{
+    console.log('R$' + sindicato + ' desconto do sindicato');
+}
+
+if (salarioBruto)
+{
+    let salárioLiquido = salarioBruto - (IR + INSS + sindicato);
+    console.log('R$' + salárioLiquido + ' salário líquido');
+}
+---------------------------Concluido-------------------------------*/
+
+//ex 16
+/**
+ * Faça um programa para uma loja de tintas. O programa deverá pedir o tamanho em metros quadrados da área a ser pintada.
+
+Considere que a cobertura da tinta é de 1 litro para cada 3 metros quadrados e que a tinta é vendida em latas de 18 litros, que custam R$ 80,00.
+
+Informe ao usuário a quantidades de latas de tinta a serem compradas e o preço total.
+ */

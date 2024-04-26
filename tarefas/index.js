@@ -8,6 +8,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 
 const tarefa = require('./model/tarefa');
+const login = require('./model/login')
 
 let porta = 8000;
 
@@ -70,8 +71,11 @@ app.post("/deletar-tarefa", async function(req, res){
     res.send(retorno);
 });
 
-app.post("/logar", function(req, res){
-    res.send("usuario logado");
+app.post("/logar", async function(req, res){
+
+    let retorno = await login.logar(req.body.usuario, req.body.senha);
+
+    res.send(retorno);
 })
 
 app.listen(porta, function(){

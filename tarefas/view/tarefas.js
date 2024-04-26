@@ -1,3 +1,13 @@
+
+let usuario = window.sessionStorage.getItem("usuario");
+
+if (!usuario) {
+    console.log("sem usuario logado");
+    window.location.pathname = "/login.html";
+}
+
+usuario = JSON.parse(usuario);
+
 // executa quando a pagina for completamente carregada
 $().ready(function(){
 
@@ -6,6 +16,13 @@ $().ready(function(){
     if (window.location.hostname != ''){
         SERVIDOR = 'https://tarefas-backend.onrender.com';
     }
+
+    // deslogar
+    $("#bt-usuario").html(usuario.nome);
+    $("#bt-usuario").click(function(){
+        window.sessionStorage.removeItem("usuario");
+        window.location.pathname = "/login.html";
+    });
     
     // lista todos ao iniciar
     carregar();
@@ -17,6 +34,16 @@ $().ready(function(){
         carregar(concluido);
 
     }); // fim click
+
+    $("#add-tarefa").click(function(){
+        $("#tela-add").modal('show');
+
+        $("#titulo").val("");
+        $("#data-conclusao").val("");
+        $("#titulo").removeClass("is-invalid");
+
+
+    }); // fim add-tarefa
 
     function carregar(concluido)
     {
@@ -63,6 +90,11 @@ $().ready(function(){
         let dados = {};
         dados.titulo = $("#titulo").val();
         dados.data = $("#data-conclusao").val();
+
+        if (dados.titulo == ""){
+            $("#titulo").addClass("is-invalid");
+            return;
+        }
 
         let id = $("#id-tarefa").val();
 
@@ -114,6 +146,7 @@ $().ready(function(){
 
     $("#lista-tarefas").on("click", ".bt-alterar", function(){
         $("#tela-add").modal('show');
+        $("#titulo").removeClass("is-invalid");
         
         let dados = $(this).attr("dados");
         dados = JSON.parse(dados);

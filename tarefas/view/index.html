@@ -25,9 +25,12 @@
         <li class="nav-item"><a href="#" concluido="true" class="nav-link ">Concluídas</a></li>
         <li class="nav-item"><a href="#" concluido="" class="nav-link active">Todas</a></li>
       </ul>
+
+      <button class="btn btn-outline-dark ms-4" id="bt-usuario" >Usuario</button>
+
     </header>
 
-    <button class="btn btn-primary mb-4" data-bs-toggle="modal" data-bs-target="#tela-add">Add Tarefa</button>
+    <button class="btn btn-primary mb-4" id="add-tarefa">Add Tarefa</button>
 
     <div class="modal fade" id="tela-add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
@@ -41,8 +44,11 @@
             <input type="hidden" id="id-tarefa" value=""/>
 
             <div class="form-floating">
-              <input class="form-control" type="text" id="titulo" placeholder="titulo" />
+              <input class="form-control " type="text" id="titulo" placeholder="titulo" />
               <label class="form-label" for="titulo">Titulo</label>
+              <div class="invalid-feedback">
+                O titulo é obrigatorio estar preenchido
+              </div>
             </div>
 
             <div class="mt-4 form-floating">
