@@ -1,6 +1,6 @@
 let SERVIDOR = 'http://localhost:8000';
     
-if (window.location.port == 80){
+if (window.location.port == 80 || window.location.port == ""){
     SERVIDOR = 'https://tarefas-backend.onrender.com';
 }
 
